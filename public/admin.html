@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Portfolio - Wendladfan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f5f5f5; }
+        h1 { color: #1a5f7a; }
+        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { background: #1a5f7a; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+        .delete-btn { background: #c0392b; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; }
+        th { background: #1a5f7a; color: white; }
+        .logout-btn { background: #c0392b; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; float: right; }
+    </style>
+</head>
+<body>
+
+<!-- BOÎTE DE CONNEXION -->
+<div id="loginBox" style="max-width:400px; margin:50px auto; background:white; padding:30px; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.1);">
+    <h2 style="color:#1a5f7a; text-align:center;">🔐 Admin Wendladfan</h2>
+    <input type="password" id="adminPassword" placeholder="Mot de passe" style="width:100%; padding:14px; margin:15px 0; border:1px solid #ddd; border-radius:8px; font-size:16px;">
+    <button onclick="checkPassword()" style="width:100%; padding:14px; background:#1a5f7a; color:white; border:none; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer;">Se connecter</button>
+    <p id="loginError" style="color:#c0392b; text-align:center; margin-top:10px;"></p>
+    <p style="text-align:center; margin-top:20px; color:#666; font-size:14px;">Mot de passe par défaut : <strong>Wendlad2024</strong></p>
+</div>
+
+<!-- CONTENU ADMIN (CACHÉ PAR DÉFAUT) -->
+<div id="adminContent" style="display:none;">
+    
+    <button onclick="logout()" class="logout-btn">🚪 Déconnexion</button>
+    <h1>🔧 Admin Portfolio - Wendladfan</h1>
+    
+    <div class="card">
+        <h2>➕ Ajouter un projet</h2>
+        <form id="projectForm">
+            <input type="text" id="title" placeholder="Titre du projet" required>
+            <select id="category" required>
+                <option value="bureautique">Bureautique</option>
+                <option value="infographie">Infographie</option>
+            </select>
+            <input type="text" id="description" placeholder="Description (optionnel)">
+            <select id="media_type">
+                <option value="image">Image</option>
+                <option value="video">Vidéo</option>
+                <option value="pdf">PDF</option>
+            </select>
+            <input type="text" id="media_url" placeholder="URL du média (optionnel)">
+            <input type="text" id="image_color" placeholder="Couleur de fond (#1a5f7a)" value="#1a5f7a">
+            <button type="submit" class="btn">Ajouter le projet</button>
+        </form>
+    </div>
+    
+    <div class="card">
+        <h2>📋 Projets existants</h2>
+        <table id="projectsTable">
+            <thead><tr><th>Titre</th><th>Catégorie</th><th>Type</th><th>Action</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    
+    <p><a href="/" style="color:#1a5f7a;">← Retour au site</a></p>
+</div>
+
+<script>
+    // ========== MOT DE PASSE ==========
+    const ADMIN_PASSWORD = 'Wendlad2024'; // Vous pouvez changer ce mot de passe
+    
+    function checkPassword() {
+        const pwd = document.getElementById('adminPassword').value;
+        if (pwd === ADMIN_PASSWORD) {
+            document.getElementById('loginBox').style.display = 'none';
+            document.getElementById('adminContent').style.display = 'block';
+            localStorage.setItem('wendladfan_admin', 'true');
+            loadProjects();
+        } else {
+            document.getElementById('loginError').textContent = '❌ Mot de passe incorrect';
+        }
+    }
+    
+    function logout() {
+        localStorage.removeItem('wendladfan_admin');
+        document.getElementById('loginBox').style.display = 'block';
+        document.getElementById('adminContent').style.display = 'none';
+        document.getElementById('adminPassword').value = '';
+    }
+    
+    // Vérifier si déjà connecté
+    if (localStorage.getItem('wendladfan_admin') === 'true') {
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+    }
+
+    // ========== GESTION PROJETS ==========
+    async function loadProjects() {
+        const res = await fetch('/api/projects');
+        const projects = await res.json();
+        const tbody = document.querySelector('#projectsTable tbody');
+        tbody.innerHTML = projects.map(p => `<tr>
+            <td>${p[1]}</td>
+            <td>${p[2]}</td>
+            <td>${p[4] || 'image'}</td>
+            <td><button class="btn delete-btn" onclick="deleteProject(${p[0]})">🗑️ Supprimer</button></td>
+        </tr>`).join('');
+    }
+    
+    async function deleteProject(id) {
+        if (!confirm('Supprimer ce projet ?')) return;
+        await fetch('/api/projects/delete', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id})
+        });
+        loadProjects();
+    }
+    
+    document.getElementById('projectForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('title').value;
+        const category = document.getElementById('category').value;
+        const description = document.getElementById('description').value;
+        const media_type = document.getElementById('media_type').value;
+        const media_url = document.getElementById('media_url').value;
+        const image_color = document.getElementById('image_color').value;
+        
+        await fetch('/api/projects/add', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({title, category, description, media_type, media_url, image_color})
+        });
+        alert('✅ Projet ajouté !');
+        e.target.reset();
+        loadProjects();
+    };
+    
+    // Charger les projets si admin visible
+    if (localStorage.getItem('wendladfan_admin') === 'true') {
+        loadProjects();
+    }
+    
+    // Permettre la touche Entrée
+    document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkPassword();
+    });
+</script>
+</body>
+</html>
