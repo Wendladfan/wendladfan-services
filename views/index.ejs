@@ -8,9 +8,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root { --primary: #1a5f7a; --secondary: #e67e22; --dark: #0d1b2a; --light: #f8f9fa; --success: #25D366; }
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; color: var(--dark); background: var(--light); padding-bottom: 80px; }
-        .whatsapp-float { position: fixed; bottom: 90px; right: 20px; background: var(--success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; text-decoration: none; box-shadow: 0 5px 20px rgba(37,211,102,0.4); z-index: 1000; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
-        header { padding: 16px 20px; background: white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+        .whatsapp-float { position: fixed; bottom: 90px; right: 20px; background: var(--success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; text-decoration: none; box-shadow: 0 5px 20px rgba(37,211,102,0.4); z-index: 1000; }
+        header { padding: 16px 20px; background: white; border-bottom: 1px solid #eee; }
         nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
         .logo { font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; }
         .logo span { color: var(--secondary); }
@@ -21,9 +20,6 @@
         .btn-primary { background: white; color: var(--primary); padding: 14px 35px; border-radius: 50px; text-decoration: none; font-weight: 700; display: inline-block; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .section-title { font-size: 1.6rem; margin: 30px 0 20px; color: var(--primary); }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 10px 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 99; }
-        .bottom-nav a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #6c757d; font-size: 12px; }
-        .bottom-nav a.active { color: var(--primary); font-weight: 600; }
         .accordion { background: white; border-radius: 16px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
         .accordion-header { padding: 18px 20px; font-weight: 700; display: flex; justify-content: space-between; cursor: pointer; }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0 20px; }
@@ -43,16 +39,14 @@
         .footer-section h4 { color: var(--secondary); margin-bottom: 15px; }
         .footer-section p { color: #ccc; margin-bottom: 8px; }
         .footer-bottom { text-align: center; padding-top: 25px; border-top: 1px solid #333; color: #aaa; }
-        .hidden { display: none; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 10px 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 99; }
+        .bottom-nav a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #6c757d; font-size: 12px; }
+        .bottom-nav a.active { color: var(--primary); font-weight: 600; }
         .testimonial-card { background: white; padding: 20px; border-radius: 16px; min-width: 280px; }
     </style>
 </head>
 <body>
-
-<!-- WhatsApp Float -->
 <a href="https://wa.me/22652580895" class="whatsapp-float" target="_blank">💬</a>
-
-<!-- Header -->
 <header>
     <nav>
         <a href="/" class="logo">Wendladfan <span>Services</span></a>
@@ -63,17 +57,13 @@
         </div>
     </nav>
 </header>
-
 <main>
-    <!-- Hero -->
     <section class="hero">
         <h1>Donnez de la valeur à vos idées</h1>
         <p style="margin-bottom:25px;">Des designs qui attirent, des documents qui convainquent.<br>Bureautique & Infographie au Burkina Faso.</p>
         <a href="#devis" class="btn-primary">📱 Demander un devis</a>
     </section>
-
     <div class="container">
-        <!-- Services -->
         <h2 class="section-title">📋 Nos Services</h2>
         <div class="accordion">
             <div class="accordion-header" onclick="toggleAccordion(this)"><span>🖥️ BUREAUTIQUE & GESTION</span><span>▼</span></div>
@@ -98,38 +88,15 @@
                 <a href="/infographie" style="display:block; text-align:center; margin-top:15px; color:#1a5f7a;">Voir tous les services →</a>
             </div>
         </div>
-
-        <!-- PORTFOLIO -->
-        <h2 class="section-title" id="portfolio">🖼️ Portfolio</h2>
-        <div style="margin-bottom: 15px;">
+        <h2 class="section-title">🖼️ Portfolio</h2>
+        <div style="margin-bottom:15px;">
             <button class="filter-btn active" onclick="filterPortfolio('all')">Tous</button>
             <button class="filter-btn" onclick="filterPortfolio('bureautique')">Bureautique</button>
             <button class="filter-btn" onclick="filterPortfolio('infographie')">Infographie</button>
         </div>
-        <div id="portfolioGrid" class="portfolio-grid"></div>
-
-        <!-- Témoignages -->
+        <div class="portfolio-grid" id="portfolioGrid"></div>
         <h2 class="section-title">⭐ Témoignages</h2>
-        <div id="testimonialsList" style="display:flex; gap:15px; overflow-x:auto; padding:10px 0;">
-            <div class="testimonial-card"><div style="color:#f1c40f;">★★★★★</div><p>"Excellent travail !"</p><p style="color:#1a5f7a; font-weight:bold;">- Aicha K.</p></div>
-        </div>
-
-        <!-- Formulaire Témoignage -->
-        <div style="background:white; padding:20px; border-radius:16px; margin:20px 0;">
-            <h3>💬 Laissez votre avis</h3>
-            <form onsubmit="submitTestimonial(event)">
-                <input type="text" id="testimonialAuthor" placeholder="Votre nom" required style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
-                <textarea id="testimonialContent" placeholder="Votre message" required style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;"></textarea>
-                <select id="testimonialStars" style="width:100%; padding:12px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
-                    <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-                    <option value="4">⭐⭐⭐⭐ Très bien</option>
-                    <option value="3">⭐⭐⭐ Bien</option>
-                </select>
-                <button type="submit" style="background:#1a5f7a; color:white; padding:14px; border:none; border-radius:8px; width:100%;">Envoyer</button>
-            </form>
-        </div>
-
-        <!-- Formulaire Devis -->
+        <div id="testimonialsList" style="display:flex; gap:15px; overflow-x:auto; padding:10px 0;" class="testimonials-container"></div>
         <h2 class="section-title" id="devis">📝 Demande de Devis</h2>
         <div style="background:white; padding:25px; border-radius:16px;">
             <form onsubmit="sendQuote(event)">
@@ -146,8 +113,6 @@
         </div>
     </div>
 </main>
-
-<!-- Footer -->
 <footer>
     <div class="footer-grid">
         <div class="footer-section"><h4>Wendladfan Services</h4><p>Bureautique & Infographie<br>Burkina Faso</p><p style="color:var(--secondary);">"Wend na kond laafy"</p></div>
@@ -157,73 +122,56 @@
     </div>
     <div class="footer-bottom"><p>© 2026 Wendladfan Services</p><p>💰 Orange Money • Moov Money • Wave</p></div>
 </footer>
-
-<!-- Bottom Nav -->
 <div class="bottom-nav">
-    <a href="/" class="active">🏠<span>Accueil</span></a>
+    <a href="/">🏠<span>Accueil</span></a>
     <a href="/bureautique">📄<span>Bureautique</span></a>
     <a href="/infographie">🎨<span>Infographie</span></a>
     <a href="/packs">📦<span>Packs</span></a>
     <a href="/paiement">💰<span>Paiement</span></a>
 </div>
-
 <script>
-    // Accordéon
-    function toggleAccordion(h) { 
-        h.classList.toggle('active'); 
-        h.nextElementSibling.classList.toggle('show'); 
-        h.querySelector('span:last-child').textContent = h.nextElementSibling.classList.contains('show') ? '▲' : '▼'; 
-    }
-
-    // Portfolio
-    async function loadPortfolio(category = 'all') {
-        const res = await fetch('/api/projects');
-        let projects = await res.json();
-        if (category !== 'all') projects = projects.filter(p => p[2] === category);
+    function toggleAccordion(h) { h.classList.toggle('active'); h.nextElementSibling.classList.toggle('show'); h.querySelector('span:last-child').textContent = h.nextElementSibling.classList.contains('show') ? '▲' : '▼'; }
+    
+    const projects = [
+        { title: 'CV Professionnel', category: 'bureautique', color: '#1a5f7a' },
+        { title: 'Logo Startup', category: 'infographie', color: '#e67e22' },
+        { title: 'Tableau de Bord', category: 'bureautique', color: '#27ae60' },
+        { title: 'Affiche Mariage', category: 'infographie', color: '#8e44ad' }
+    ];
+    
+    const testimonials = [
+        { author: 'Aicha K.', content: 'CV refait en 24h, j\'ai décroché un entretien !', stars: 5 },
+        { author: 'Ibrahim S.', content: 'Logo très professionnel pour ma boutique.', stars: 5 },
+        { author: 'Fatou O.', content: 'Mon mémoire était impeccable.', stars: 5 }
+    ];
+    
+    function loadPortfolio(cat = 'all') {
         const grid = document.getElementById('portfolioGrid');
-        grid.innerHTML = projects.map(p => {
-            const title = p[1], cat = p[2], color = p[6] || '#1a5f7a';
-            return `<div class="portfolio-item">
-                <div style="height:120px; background:${color}; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">${title.substring(0,15)}</div>
-                <div class="info"><h4>${title}</h4><span class="cat">${cat === 'bureautique' ? 'Bureautique' : 'Infographie'}</span></div>
-            </div>`;
-        }).join('');
+        const filtered = cat === 'all' ? projects : projects.filter(p => p.category === cat);
+        grid.innerHTML = filtered.map(p => `<div class="portfolio-item"><div style="height:120px; background:${p.color}; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">${p.title}</div><div class="info"><h4>${p.title}</h4><span class="cat">${p.category}</span></div></div>`).join('');
     }
-
+    
     function filterPortfolio(cat) {
-        document.querySelectorAll('.filter-btn').forEach((btn, i) => {
-            btn.classList.remove('active');
-            if ((i === 0 && cat === 'all') || (i === 1 && cat === 'bureautique') || (i === 2 && cat === 'infographie')) {
-                btn.classList.add('active');
-            }
-        });
+        document.querySelectorAll('.filter-btn').forEach((btn, i) => { btn.classList.remove('active'); if ((i===0&&cat==='all')||(i===1&&cat==='bureautique')||(i===2&&cat==='infographie')) btn.classList.add('active'); });
         loadPortfolio(cat);
     }
-
-    // Témoignages
-    async function submitTestimonial(e) {
-        e.preventDefault();
-        const author = document.getElementById('testimonialAuthor').value;
-        const content = document.getElementById('testimonialContent').value;
-        const stars = document.getElementById('testimonialStars').value;
-        await fetch('/api/testimonials/add', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({author, content, stars}) });
-        alert('Merci !');
-        location.reload();
+    
+    function loadTestimonials() {
+        const container = document.querySelector('.testimonials-container');
+        if (container) container.innerHTML = testimonials.map(t => `<div class="testimonial-card"><div style="color:#f1c40f;">${'★'.repeat(t.stars)}</div><p>"${t.content}"</p><p style="color:#1a5f7a; font-weight:bold;">- ${t.author}</p></div>`).join('');
     }
-
-    // Devis
-    async function sendQuote(e) {
+    
+    function sendQuote(e) {
         e.preventDefault();
         const name = document.getElementById('fullName').value;
         const phone = document.getElementById('phone').value;
         const type = document.getElementById('serviceType').value;
         const message = document.getElementById('message').value;
-        await fetch('/api/quote', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({name, phone, type, message}) });
         window.open(`https://wa.me/22652580895?text=${encodeURIComponent('*DEVIS*%0A' + name + '%0A' + phone + '%0A' + type + '%0A' + message)}`, '_blank');
     }
-
-    // Charger tout
+    
     loadPortfolio();
+    loadTestimonials();
 </script>
 </body>
 </html>
