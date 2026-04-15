@@ -1,15 +1,14 @@
 {
-  "name": "wendladfan-termux",
+  "name": "wendladfan-services",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Wendladfan Services - Bureautique & Infographie Burkina Faso",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["bureautique", "infographie", "burkina faso", "ouagadougou"],
+  "author": "Wendladfan",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "ejs": "^5.0.2",
     "express": "^5.2.1",
