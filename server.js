@@ -1,41 +1,30 @@
 const express = require('express');
-const path = require('path');
 const app = express();
-const PORT = 3000;
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static('public'));
-app.set('view engine', 'ejs');
-
-// Données en dur
-const projects = [
-    { id: 1, title: 'CV Professionnel', category: 'bureautique', image_color: '#1a5f7a' },
-    { id: 2, title: 'Logo Startup', category: 'infographie', image_color: '#e67e22' },
-    { id: 3, title: 'Tableau de Bord Excel', category: 'bureautique', image_color: '#27ae60' },
-    { id: 4, title: 'Affiche Mariage', category: 'infographie', image_color: '#8e44ad' }
-];
-
-const testimonials = [
-    { author: 'Aicha K.', content: 'CV refait en 24h, excellent service !', stars: 5 },
-    { author: 'Ibrahim S.', content: 'Logo très professionnel, je recommande !', stars: 5 },
-    { author: 'Fatou O.', content: 'Mémoire impeccable, mise en page parfaite.', stars: 5 }
-];
-
-// Routes
-app.get('/', (req, res) => res.render('index', { projects, testimonials }));
-app.get('/bureautique', (req, res) => res.render('bureautique'));
-app.get('/infographie', (req, res) => res.render('infographie'));
-app.get('/packs', (req, res) => res.render('packs'));
-app.get('/paiement', (req, res) => res.render('paiement'));
-
-app.get('/api/projects', (req, res) => res.json(projects));
-app.get('/api/testimonials', (req, res) => res.json(testimonials));
-
-app.post('/api/quote', (req, res) => res.json({ success: true }));
+app.get('/', (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head><title>Wendladfan Services</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body { font-family: sans-serif; text-align: center; padding: 50px; background: linear-gradient(135deg, #1a5f7a, #e67e22); color: white; }
+            h1 { font-size: 2rem; }
+            .btn { display: inline-block; background: white; color: #1a5f7a; padding: 15px 30px; border-radius: 50px; text-decoration: none; margin-top: 20px; }
+        </style>
+        </head>
+        <body>
+            <h1>✅ Wendladfan Services</h1>
+            <p>Bureautique & Infographie au Burkina Faso</p>
+            <p>📞 WhatsApp : +226 52 58 08 95</p>
+            <a href="https://wa.me/22652580895" class="btn">💬 Commander sur WhatsApp</a>
+        </body>
+        </html>
+    `);
+});
 
 if (process.env.VERCEL) {
     module.exports = app;
 } else {
-    app.listen(PORT, () => console.log(`✅ http://localhost:${PORT}`));
+    app.listen(3000, () => console.log('✅ http://localhost:3000'));
 }
