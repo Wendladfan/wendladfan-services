@@ -30,15 +30,18 @@ async function initDB() {
         db.run(`INSERT INTO projects (title, category, image_color) VALUES ('CV Professionnel', 'bureautique', '#1a5f7a')`);
         db.run(`INSERT INTO projects (title, category, image_color) VALUES ('Logo Startup', 'infographie', '#e67e22')`);
     }
+    
     const checkT = db.exec('SELECT COUNT(*) FROM testimonials');
     if (checkT[0].values[0][0] === 0) {
         db.run(`INSERT INTO testimonials (author, content, stars) VALUES ('Aicha K.', 'Excellent travail !', 5)`);
     }
+    
     saveDB();
 }
 
 function saveDB() { fs.writeFileSync(dbPath, Buffer.from(db.export())); }
 
+// ========== ROUTES ==========
 app.get('/', (req, res) => res.render('index'));
 app.get('/bureautique', (req, res) => res.render('bureautique'));
 app.get('/infographie', (req, res) => res.render('infographie'));
@@ -48,10 +51,13 @@ app.get('/paiement', (req, res) => res.render('paiement'));
 app.get('/api/projects', (req, res) => { const r = db.exec('SELECT * FROM projects ORDER BY id DESC'); res.json(r.length ? r[0].values : []); });
 app.post('/api/projects/add', (req, res) => { const { title, category, description, media_type, media_url, image_color } = req.body; db.run('INSERT INTO projects (title, category, description, media_type, media_url, image_color) VALUES (?, ?, ?, ?, ?, ?)', [title, category, description, media_type || 'image', media_url || '', image_color || '#1a5f7a']); saveDB(); res.json({ success: true }); });
 app.post('/api/projects/delete', (req, res) => { db.run('DELETE FROM projects WHERE id = ?', [req.body.id]); saveDB(); res.json({ success: true }); });
+
 app.get('/api/testimonials', (req, res) => { const r = db.exec('SELECT * FROM testimonials'); res.json(r.length ? r[0].values : []); });
 app.post('/api/testimonials/add', (req, res) => { const { author, content, stars } = req.body; db.run('INSERT INTO testimonials (author, content, stars) VALUES (?, ?, ?)', [author, content, stars||5]); saveDB(); res.json({ success: true }); });
+
 app.post('/api/quote', (req, res) => { const { name, phone, type, service, details, message } = req.body; db.run('INSERT INTO quotes (name, phone, type, service, details, message) VALUES (?, ?, ?, ?, ?, ?)', [name, phone, type, service, details, message]); saveDB(); res.json({ success: true }); });
 
+// ========== DÉMARRAGE ==========
 if (process.env.VERCEL) {
     module.exports = app;
     initDB();
