@@ -5,6 +5,9 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
+// Pour Vercel
+app.set('trust proxy', 1);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
@@ -79,4 +82,10 @@ app.post('/api/testimonials/add', (req, res) => { const { author, content, stars
 
 app.post('/api/quote', (req, res) => { const { name, phone, type, service, details, message } = req.body; db.run('INSERT INTO quotes (name, phone, type, service, details, message) VALUES (?, ?, ?, ?, ?, ?)', [name, phone, type, service, details, message]); saveDB(); res.json({ success: true }); });
 
-initDB().then(() => app.listen(PORT, () => console.log(`✅ http://localhost:${PORT}`)));
+// ========== DÉMARRAGE (LOCAL OU VERCEL) ==========
+if (process.env.VERCEL) {
+    module.exports = app;
+    initDB();
+} else {
+    initDB().then(() => app.listen(PORT, () => console.log(`✅ http://localhost:${PORT}`)));
+}
