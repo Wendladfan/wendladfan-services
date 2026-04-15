@@ -41,7 +41,6 @@
         .footer-bottom { text-align: center; padding-top: 25px; border-top: 1px solid #333; color: #aaa; }
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 10px 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 99; }
         .bottom-nav a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #6c757d; font-size: 12px; }
-        .bottom-nav a.active { color: var(--primary); font-weight: 600; }
         .testimonial-card { background: white; padding: 20px; border-radius: 16px; min-width: 280px; }
     </style>
 </head>
@@ -59,7 +58,7 @@
 </header>
 <main>
     <section class="hero">
-        <h1>Donnez de la valeur à vos idées</h1>
+        <h1>Donnez de la valeur a vos idees</h1>
         <p style="margin-bottom:25px;">Des designs qui attirent, des documents qui convainquent.<br>Bureautique & Infographie au Burkina Faso.</p>
         <a href="#devis" class="btn-primary">📱 Demander un devis</a>
     </section>
@@ -69,9 +68,9 @@
             <div class="accordion-header" onclick="toggleAccordion(this)"><span>🖥️ BUREAUTIQUE & GESTION</span><span>▼</span></div>
             <div class="accordion-content">
                 <div class="service-item"><span>Pack Word - Documents de base</span><span class="service-price">2 000 F</span></div>
-                <div class="service-item"><span>Pack Word - Pro avancé</span><span class="service-price">5 000 F</span></div>
+                <div class="service-item"><span>Pack Word - Pro avance</span><span class="service-price">5 000 F</span></div>
                 <div class="service-item"><span>Pack Excel - Gestion simple</span><span class="service-price">10 000 F</span></div>
-                <div class="service-item"><span>Pack Excel - Suivi opérationnel</span><span class="service-price">30 000 F</span></div>
+                <div class="service-item"><span>Pack Excel - Suivi operationnel</span><span class="service-price">30 000 F</span></div>
                 <div class="service-item"><span>Pack PowerPoint</span><span class="service-price">10 000 F</span></div>
                 <div class="service-item"><span>Pack Publipostage</span><span class="service-price">15 000 F</span></div>
                 <a href="/bureautique" style="display:block; text-align:center; margin-top:15px; color:#1a5f7a;">Voir tous les services →</a>
@@ -84,7 +83,7 @@
                 <div class="service-item"><span>Logo Pro + Charte</span><span class="service-price">50 000 F</span></div>
                 <div class="service-item"><span>Affiche / Flyer</span><span class="service-price">7 500 F</span></div>
                 <div class="service-item"><span>Carte de visite</span><span class="service-price">7 500 F</span></div>
-                <div class="service-item"><span>Kakémono / Roll-up</span><span class="service-price">20 000 F</span></div>
+                <div class="service-item"><span>Kakemono / Roll-up</span><span class="service-price">20 000 F</span></div>
                 <a href="/infographie" style="display:block; text-align:center; margin-top:15px; color:#1a5f7a;">Voir tous les services →</a>
             </div>
         </div>
@@ -95,13 +94,13 @@
             <button class="filter-btn" onclick="filterPortfolio('infographie')">Infographie</button>
         </div>
         <div class="portfolio-grid" id="portfolioGrid"></div>
-        <h2 class="section-title">⭐ Témoignages</h2>
-        <div id="testimonialsList" style="display:flex; gap:15px; overflow-x:auto; padding:10px 0;" class="testimonials-container"></div>
+        <h2 class="section-title">⭐ Temoignages</h2>
+        <div id="testimonialsList" style="display:flex; gap:15px; overflow-x:auto; padding:10px 0;"></div>
         <h2 class="section-title" id="devis">📝 Demande de Devis</h2>
         <div style="background:white; padding:25px; border-radius:16px;">
             <form onsubmit="sendQuote(event)">
                 <input type="text" id="fullName" placeholder="Nom complet" required style="width:100%; padding:14px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
-                <input type="tel" id="phone" placeholder="Téléphone WhatsApp" required style="width:100%; padding:14px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
+                <input type="tel" id="phone" placeholder="Telephone WhatsApp" required style="width:100%; padding:14px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
                 <select id="serviceType" required style="width:100%; padding:14px; margin:8px 0; border:1px solid #ddd; border-radius:8px;">
                     <option value="">-- Choisir --</option>
                     <option value="bureautique">Bureautique</option>
@@ -131,47 +130,13 @@
 </div>
 <script>
     function toggleAccordion(h) { h.classList.toggle('active'); h.nextElementSibling.classList.toggle('show'); h.querySelector('span:last-child').textContent = h.nextElementSibling.classList.contains('show') ? '▲' : '▼'; }
-    
-    const projects = [
-        { title: 'CV Professionnel', category: 'bureautique', color: '#1a5f7a' },
-        { title: 'Logo Startup', category: 'infographie', color: '#e67e22' },
-        { title: 'Tableau de Bord', category: 'bureautique', color: '#27ae60' },
-        { title: 'Affiche Mariage', category: 'infographie', color: '#8e44ad' }
-    ];
-    
-    const testimonials = [
-        { author: 'Aicha K.', content: 'CV refait en 24h, j\'ai décroché un entretien !', stars: 5 },
-        { author: 'Ibrahim S.', content: 'Logo très professionnel pour ma boutique.', stars: 5 },
-        { author: 'Fatou O.', content: 'Mon mémoire était impeccable.', stars: 5 }
-    ];
-    
-    function loadPortfolio(cat = 'all') {
-        const grid = document.getElementById('portfolioGrid');
-        const filtered = cat === 'all' ? projects : projects.filter(p => p.category === cat);
-        grid.innerHTML = filtered.map(p => `<div class="portfolio-item"><div style="height:120px; background:${p.color}; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">${p.title}</div><div class="info"><h4>${p.title}</h4><span class="cat">${p.category}</span></div></div>`).join('');
-    }
-    
-    function filterPortfolio(cat) {
-        document.querySelectorAll('.filter-btn').forEach((btn, i) => { btn.classList.remove('active'); if ((i===0&&cat==='all')||(i===1&&cat==='bureautique')||(i===2&&cat==='infographie')) btn.classList.add('active'); });
-        loadPortfolio(cat);
-    }
-    
-    function loadTestimonials() {
-        const container = document.querySelector('.testimonials-container');
-        if (container) container.innerHTML = testimonials.map(t => `<div class="testimonial-card"><div style="color:#f1c40f;">${'★'.repeat(t.stars)}</div><p>"${t.content}"</p><p style="color:#1a5f7a; font-weight:bold;">- ${t.author}</p></div>`).join('');
-    }
-    
-    function sendQuote(e) {
-        e.preventDefault();
-        const name = document.getElementById('fullName').value;
-        const phone = document.getElementById('phone').value;
-        const type = document.getElementById('serviceType').value;
-        const message = document.getElementById('message').value;
-        window.open(`https://wa.me/22652580895?text=${encodeURIComponent('*DEVIS*%0A' + name + '%0A' + phone + '%0A' + type + '%0A' + message)}`, '_blank');
-    }
-    
-    loadPortfolio();
-    loadTestimonials();
+    const projects = [{ title: 'CV Professionnel', category: 'bureautique', color: '#1a5f7a' },{ title: 'Logo Startup', category: 'infographie', color: '#e67e22' },{ title: 'Tableau de Bord', category: 'bureautique', color: '#27ae60' },{ title: 'Affiche Mariage', category: 'infographie', color: '#8e44ad' }];
+    const testimonials = [{ author: 'Aicha K.', content: 'CV refait en 24h, j\'ai decroche un entretien !', stars: 5 },{ author: 'Ibrahim S.', content: 'Logo tres professionnel pour ma boutique.', stars: 5 },{ author: 'Fatou O.', content: 'Mon memoire etait impeccable.', stars: 5 }];
+    function loadPortfolio(cat = 'all') { const grid = document.getElementById('portfolioGrid'); const filtered = cat === 'all' ? projects : projects.filter(p => p.category === cat); grid.innerHTML = filtered.map(p => `<div class="portfolio-item"><div style="height:120px; background:${p.color}; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">${p.title}</div><div class="info"><h4>${p.title}</h4><span class="cat">${p.category}</span></div></div>`).join(''); }
+    function filterPortfolio(cat) { document.querySelectorAll('.filter-btn').forEach((btn, i) => { btn.classList.remove('active'); if ((i===0&&cat==='all')||(i===1&&cat==='bureautique')||(i===2&&cat==='infographie')) btn.classList.add('active'); }); loadPortfolio(cat); }
+    function loadTestimonials() { const container = document.getElementById('testimonialsList'); if (container) container.innerHTML = testimonials.map(t => `<div class="testimonial-card"><div style="color:#f1c40f;">${'★'.repeat(t.stars)}</div><p>"${t.content}"</p><p style="color:#1a5f7a; font-weight:bold;">- ${t.author}</p></div>`).join(''); }
+    function sendQuote(e) { e.preventDefault(); const name = document.getElementById('fullName').value; const phone = document.getElementById('phone').value; const type = document.getElementById('serviceType').value; const message = document.getElementById('message').value; window.open(`https://wa.me/22652580895?text=${encodeURIComponent('*DEVIS*%0A' + name + '%0A' + phone + '%0A' + type + '%0A' + message)}`, '_blank'); }
+    loadPortfolio(); loadTestimonials();
 </script>
 </body>
 </html>
