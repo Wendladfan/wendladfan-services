@@ -6,7 +6,11 @@ const PORT = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
+
+// Configuration EJS pour Express 5
+app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (req, res) => res.render('index'));
 app.get('/bureautique', (req, res) => res.render('bureautique'));
